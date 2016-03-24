@@ -13,23 +13,17 @@
 'use strict';
 
 var reviewCountThreshold = 40;
-var reviewValueThreshold = 4;
 
 function hideBelowThreshold() {
     var results = document.querySelectorAll('.s-result-item');
     [].forEach.call(results, function(result) {
-        var stars = 0;
         var count = 0;
-        var starsEl = result.querySelector('.a-icon.a-icon-star > .a-icon-alt');
-        if (starsEl) {
-            stars = starsEl.textContent.trim().replace(/^(\d(\.\d)?) .+$/, '$1')*1;
-        }
         var countEl = result.querySelector('[href*="#customerReviews"]');
         if (countEl) {
-            count = countEl.textContent.trim().replace(',', '')*1;
+            count = countEl.textContent.trim().replace(/[,\.]/, '')*1;
         }
 
-        if (stars < reviewValueThreshold || count < reviewCountThreshold) {
+        if (count < reviewCountThreshold) {
             //result.remove();
             result.style.opacity = '0.25';
         }
